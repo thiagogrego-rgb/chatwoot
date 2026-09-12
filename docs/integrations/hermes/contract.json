@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "channel": "api",
+  "summary": {
+    "method": "POST",
+    "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages",
+    "message_type": "outgoing",
+    "private": true,
+    "maximum_characters": 3500,
+    "required_sections": ["Protocolo:", "Ultima pergunta tratada:", "Resposta anterior do assistente", "Pendencia/proxima acao:"]
+  },
+  "history": {
+    "method": "GET",
+    "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages",
+    "pagination": "before",
+    "private_notes_allowed_in_model_context": false
+  },
+  "ownership": {
+    "pause_bot_while_human": true,
+    "resume_requires_explicit_action": true,
+    "customer_role_statement_grants_access": false
+  }
+}
