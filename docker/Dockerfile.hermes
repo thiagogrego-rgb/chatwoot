@@ -1,0 +1,9 @@
+# Incremental fork distribution; upstream runtime and assets remain at 4.17.1.
+ARG CHATWOOT_BASE=chatwoot/chatwoot:v4.17.1
+FROM ${CHATWOOT_BASE}
+ARG FORK_REVISION
+LABEL org.opencontainers.image.source="https://github.com/thiagogrego-rgb/chatwoot" \
+      org.opencontainers.image.revision="${FORK_REVISION}"
+COPY app/controllers/api/v1/accounts/conversations/hermes_context_controller.rb /app/app/controllers/api/v1/accounts/conversations/hermes_context_controller.rb
+COPY config/initializers/hermes_context.rb /app/config/initializers/hermes_context.rb
+COPY docs/integrations/hermes/contract.json /app/hermes-contract.json
