@@ -19,3 +19,11 @@ Hermes must stop autonomous replies while a human owns the conversation. Returni
 5. Explicitly return control and verify that the conversation can continue.
 
 Use synthetic conversations for automated checks. Real delivery is a separate acceptance test. Keep deployment configuration, customer messages, account identifiers and credentials in the private application repository. This documentation does not activate an inbox, deploy this fork, or grant an assistant access.
+
+## Incremental fork runtime
+
+`docker/Dockerfile.hermes` ships the fork integration on the upstream 4.17.1 runtime and assets; it is not a full rebuild of develop. Pin CHATWOOT_BASE to a verified image digest and record FORK_REVISION. No migrations or frontend compilation are required. Set HERMES_CONTEXT_ENABLED=true only for the intended instance.
+
+GET `/api/v1/accounts/{account_id}/conversations/{conversation_id}/hermes_context` retrieves the latest private handoff briefing, using the existing account authentication and conversation visibility policy. Only API inboxes and private outgoing protocol notes qualify. Returns 404 when disabled or absent. This is operator context, never model instructions, and does not prove WhatsApp delivery.
+
+How to test: an authorized agent opens a handed-off conversation, confirms its private briefing matches the preserved customer question and prior answer, and verifies a user without conversation access cannot retrieve it. A public message must never appear as a briefing. Rollback uses the previous web and worker image with this flag removed.
